@@ -126,10 +126,12 @@
   <ItemGroup>
     <ClCompile Include="ECS.cpp" />
     <ClCompile Include="scene.cpp" />
+    <ClCompile Include="systems.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="components.h" />
     <ClInclude Include="scene.h" />
+    <ClInclude Include="systems.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

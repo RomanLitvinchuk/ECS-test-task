@@ -53,7 +53,7 @@ public:
 	{
 		bool isFoundEntity = false;
 		for (const auto& record : registry) {
-			if (record.id_ = entity) {
+			if (record.id_ == entity) {
 				isFoundEntity = true;
 				for (auto& comp : record.components) {
 					if (T* casted = dynamic_cast<T*>(comp.get())) {
@@ -70,4 +70,4 @@ public:
 };
 
 
-#endif SCENE_H_
+#endif //SCENE_H_

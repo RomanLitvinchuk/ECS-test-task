@@ -16,24 +16,6 @@ public:
 	HealthComponent(int max, int current) : max_(max), current_(current) {}
 };
 
-//struct Position {
-//	float x;
-//	float y;
-//	float z;
-//};
-//
-//struct Rotation {
-//	float x;
-//	float y;
-//	float z;
-//};
-//
-//struct Scale {
-//	float x;
-//	float y;
-//	float z;
-//};
-
 class TransformComponent : public Component {
 public:
 	std::vector<float> position_;

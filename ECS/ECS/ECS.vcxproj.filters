@@ -21,12 +21,18 @@
     <ClCompile Include="scene.cpp">
       <Filter>Исходные файлы</Filter>
     </ClCompile>
+    <ClCompile Include="systems.cpp">
+      <Filter>Исходные файлы</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="components.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
     <ClInclude Include="scene.h">
+      <Filter>Файлы заголовков</Filter>
+    </ClInclude>
+    <ClInclude Include="systems.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
   </ItemGroup>
