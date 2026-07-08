@@ -12,7 +12,6 @@ public:
 	int max_;
 	int current_;
 
-	HealthComponent() : max_(0), current_(0) {}
 	HealthComponent(int max, int current) : max_(max), current_(current) {}
 };
 

@@ -1,6 +1,7 @@
 #ifndef SYSTEMS_H_
 #define SYSTEMS_H_
-#include "scene.h"
+
+class Scene;
 
 class MovementSystem {
 public:

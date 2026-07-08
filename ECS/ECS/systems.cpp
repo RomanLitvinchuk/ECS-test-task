@@ -1,4 +1,5 @@
 #include "systems.h"
+#include "scene.h"
 
 void MovementSystem::Update(float dt, Scene& scene)
 {

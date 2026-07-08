@@ -3,8 +3,9 @@
 
 #include <vector>
 #include <memory>
-#include "components.h"
 #include <iostream>
+#include "components.h"
+#include "systems.h"
 
 using Entity = uint32_t;
 
@@ -17,7 +18,7 @@ class Scene {
 private:
 	std::vector<EntityRecord> registry;
 	Entity nextId_ = 0;
-
+	MovementSystem movement_;
 public:
 	void CreateEntity();
 	void DestroyEntity(Entity entity);
@@ -67,6 +68,7 @@ public:
 		return nullptr;
 	}
 
+	void Update(float dt);
 };
 
 
