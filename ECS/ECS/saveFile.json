@@ -1,0 +1,39 @@
+{
+    "entities": [
+        {
+            "components": {
+                "HealthComponent": {
+                    "current": 50,
+                    "max": 100
+                }
+            },
+            "id": 1
+        },
+        {
+            "components": {
+                "HealthComponent": {
+                    "current": 50,
+                    "max": 50
+                },
+                "TransformComponent": {
+                    "position": [
+                        12.5,
+                        12.5,
+                        7.5
+                    ],
+                    "rotation": [
+                        0.0,
+                        0.0,
+                        0.0
+                    ],
+                    "scale": [
+                        1.0,
+                        1.0,
+                        1.0
+                    ]
+                }
+            },
+            "id": 2
+        }
+    ]
+}

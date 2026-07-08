@@ -6,7 +6,9 @@
 #include <iostream>
 #include "components.h"
 #include "systems.h"
+#include <nlohmann/json.hpp>
 
+using json = nlohmann::json;
 using Entity = uint32_t;
 
 struct EntityRecord {
@@ -17,10 +19,10 @@ struct EntityRecord {
 class Scene {
 private:
 	std::vector<EntityRecord> registry;
-	Entity nextId_ = 0;
 	MovementSystem movement_;
+	json saveFile_;
 public:
-	void CreateEntity();
+	void CreateEntity(Entity entity);
 	void DestroyEntity(Entity entity);
 
 	template <typename T>
@@ -69,6 +71,10 @@ public:
 	}
 
 	void Update(float dt);
+
+	void Save();
+	void Load();
+	void Initialize();
 };
 
 
