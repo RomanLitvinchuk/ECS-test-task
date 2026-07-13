@@ -20,7 +20,9 @@ void Scene::DestroyEntity(Entity entity)
 		}
 		k++;
 	}
-	std::cout << "Entity " << entity << " isn't found" << std::endl;
+	std::stringstream ss;
+	ss << "Warning: Entity " << entity << " wasn't found" << "\n";
+	OutputDebugStringA(ss.str().c_str());
 }
 
 void Scene::Update(float dt)
@@ -56,16 +58,17 @@ void Scene::Load() {
 		std::cout << "File doesn't exist or it's not readable" << std::endl;
 		return;
 	}
+	registry.clear();
 	json jFile = json::parse(file);
 	for (auto& entityJson : jFile["entities"]) {
 		auto id = entityJson["id"].get<uint32_t>();
 		CreateEntity(id);
-		if (entityJson.contains("HealthComponent")) {
+		if (entityJson["components"].contains("HealthComponent")) {
 			int max = entityJson["components"]["HealthComponent"]["max"].get<int>();
 			int current = entityJson["components"]["HealthComponent"]["current"].get<int>();
 			AddComponent<HealthComponent>(id, max, current);
 		}
-		if (entityJson.contains("TransformComponent")) {
+		if (entityJson["components"].contains("TransformComponent")) {
 			auto pos = entityJson["components"]["TransformComponent"]["position"].get<std::vector<float>>();
 			auto rot = entityJson["components"]["TransformComponent"]["rotation"].get<std::vector<float>>();
 			auto scale = entityJson["components"]["TransformComponent"]["scale"].get<std::vector<float>>();
@@ -73,6 +76,7 @@ void Scene::Load() {
 		}
 	}
 	std::cout << "Save file was loaded" << std::endl;
+	Display();
 }
 
 void Scene::Initialize()
@@ -86,6 +90,8 @@ void Scene::Initialize()
 	AddComponent<HealthComponent>(2, 50, 50);
 	AddComponent<TransformComponent>(2, std::vector<float>{ 10.0f, 10.0f, 5.0f }, std::vector<float>{ 0.0f, 0.0f, 0.0f }, std::vector<float>{ 1.0f, 1.0f, 1.0f });
 
+	Display();
+
 	Update(1.0f);
 	Update(1.0f);
 	Update(0.5f);
@@ -93,5 +99,28 @@ void Scene::Initialize()
 	DestroyEntity(3);
 	DestroyEntity(0);
 
+	Display();
+
 	Save();
+}
+
+void Scene::Display()
+{
+	std::cout << "====================================" << std::endl;
+	for (auto& entity : registry) {
+		auto id = entity.id_;
+		std::cout << "\nID: " << id << "\n";
+		if (auto health = GetComponent<HealthComponent>(id)) {
+			std::cout << "\tHealth Component" << std::endl;
+			std::cout << "\t\tMax: " << health->max_ << " Current: " << health->current_ << "\n";
+		}
+		if (auto transform = GetComponent<TransformComponent>(id)) {
+			std::cout << "\tTransform Component" << std::endl;
+			std::cout << "\t\tPos: " << transform->position_[0] << " " << transform->position_[1] << " " << transform->position_[2] << "\n";
+			std::cout << "\t\tRot: " << transform->rotation_[0] << " " << transform->rotation_[1] << " " << transform->rotation_[2] << "\n";
+			std::cout << "\t\tScl: " << transform->scale_[0] << " " << transform->scale_[1] << " " << transform->scale_[2] << "\n";
+		}
+	}
+	std::cout << "====================================" << std::endl;
+	std::cout << "\n";
 }

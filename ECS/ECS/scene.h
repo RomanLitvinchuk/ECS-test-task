@@ -4,6 +4,8 @@
 #include <vector>
 #include <memory>
 #include <iostream>
+#include <windows.h>
+#include <sstream>
 #include "components.h"
 #include "systems.h"
 #include <nlohmann/json.hpp>
@@ -48,7 +50,9 @@ public:
 				return;
 			}
 		}
-		std::cout << "Not find entity with ID " << entity << std::endl;
+		std::stringstream ss;
+		ss << "Warning: Entity " << entity << " wasn't found" << "\n";
+		OutputDebugStringA(ss.str().c_str());
 	}
 
 	template<typename T>
@@ -65,8 +69,15 @@ public:
 				}
 			}
 		}
-		if (!isFoundEntity) std::cout << "Entity " << entity << " isn't found" << std::endl;
-		else std::cout << "Component isn't found for " << entity << " entity";
+		std::stringstream ss;
+		if (!isFoundEntity) {
+			ss << "Warning: Entity " << entity << " wasn't found" << "\n";
+			OutputDebugStringA(ss.str().c_str());
+		}
+		else {
+			ss << "Warning: Component isn't found for entity " << entity << "\n";
+			OutputDebugStringA(ss.str().c_str());
+		}
 		return nullptr;
 	}
 
@@ -74,7 +85,10 @@ public:
 
 	void Save();
 	void Load();
+
 	void Initialize();
+
+	void Display();
 };
 
 

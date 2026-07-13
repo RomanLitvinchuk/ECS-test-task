@@ -7,7 +7,7 @@ int main()
 	Scene scene;
 
 	int choice;
-	std::cout << "Do you want to load from save file? 0 - Yes 1 - No" << std::endl;
+	std::cout << "Do you want to load save file? 0 - Yes 1 - No" << std::endl;
 	std::cin >> choice;
 
 	switch (choice) {
@@ -21,6 +21,7 @@ int main()
 
 	default:
 		std::cout << "Invalid input" << std::endl;
+		break;
 	}
 }
 
