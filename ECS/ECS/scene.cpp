@@ -10,15 +10,12 @@ void Scene::CreateEntity(Entity entity)
 void Scene::DestroyEntity(Entity entity)
 {
 	int k = 0;
-	for (auto& record : registry) {
-		if (record.id_ == entity) {
-			record.components.clear();
-			auto it = registry.begin() + k;
+	for (auto it = registry.begin(); it != registry.end(); ++it){
+		if (it->id_ == entity) {
 			registry.erase(it);
 			std::cout << "Entity " << entity << " was destroyed" << std::endl;
 			return;
 		}
-		k++;
 	}
 	std::stringstream ss;
 	ss << "Warning: Entity " << entity << " wasn't found" << "\n";
@@ -32,24 +29,26 @@ void Scene::Update(float dt)
 
 
 void Scene::Save() {
-	saveFile_.clear();
+	json saveFile;
+	saveFile.clear();
 	for (const auto& reg : registry) {
 		json entityJson;
-		entityJson["id"] = reg.id_;
+		auto id = reg.id_;
+		entityJson["id"] = id;
 		entityJson["components"] = json::object();
-		if (auto health = GetComponent<HealthComponent>(reg.id_)) {
+		if (auto health = GetComponent<HealthComponent>(id)) {
 			entityJson["components"]["HealthComponent"]["max"] = health->max_;
 			entityJson["components"]["HealthComponent"]["current"] = health->current_;
 		}
-		if (auto transform = GetComponent<TransformComponent>(reg.id_)) {
+		if (auto transform = GetComponent<TransformComponent>(id)) {
 			entityJson["components"]["TransformComponent"]["position"] = transform->position_;
 			entityJson["components"]["TransformComponent"]["rotation"] = transform->rotation_;
 			entityJson["components"]["TransformComponent"]["scale"] = transform->scale_;
 		}
-		saveFile_["entities"].push_back(entityJson);
+		saveFile["entities"].push_back(entityJson);
 	}
 	std::ofstream outputFile("saveFile.json");
-	outputFile << saveFile_.dump(4);
+	outputFile << saveFile.dump(4);
 }
 
 void Scene::Load() {

@@ -22,7 +22,6 @@ class Scene {
 private:
 	std::vector<EntityRecord> registry;
 	MovementSystem movement_;
-	json saveFile_;
 public:
 	void CreateEntity(Entity entity);
 	void DestroyEntity(Entity entity);
@@ -68,15 +67,6 @@ public:
 					}
 				}
 			}
-		}
-		std::stringstream ss;
-		if (!isFoundEntity) {
-			ss << "Warning: Entity " << entity << " wasn't found" << "\n";
-			OutputDebugStringA(ss.str().c_str());
-		}
-		else {
-			ss << "Warning: Component isn't found for entity " << entity << "\n";
-			OutputDebugStringA(ss.str().c_str());
 		}
 		return nullptr;
 	}
