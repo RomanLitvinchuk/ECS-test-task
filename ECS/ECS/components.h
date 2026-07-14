@@ -2,6 +2,9 @@
 #define COMPONENTS_H_
 #include <vector>
 
+//Компоненты наследуются от базового класса Component. Виртуальный деструктор нужен, чтобы объекты дочерних классов
+//корректно удалялись из памяти, когда уничтожаются через указатель на базовый класс Component
+
 class Component {
 public:
 	virtual ~Component() = default;

@@ -2,9 +2,22 @@
     "entities": [
         {
             "components": {
-                "HealthComponent": {
-                    "current": 50,
-                    "max": 100
+                "TransformComponent": {
+                    "position": [
+                        2.5,
+                        2.5,
+                        2.5
+                    ],
+                    "rotation": [
+                        0.0,
+                        0.0,
+                        0.0
+                    ],
+                    "scale": [
+                        1.0,
+                        1.0,
+                        1.0
+                    ]
                 }
             },
             "id": 1

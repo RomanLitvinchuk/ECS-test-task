@@ -11,6 +11,9 @@
 #include <nlohmann/json.hpp>
 
 using json = nlohmann::json;
+//Entity - это просто обёртка над uint32_t. При изучении ECS я видел различные вариации реализации Entity не только как обёртку,
+//но и в виде класса, где помимо id был bool на то, является id активным или нет. Т.е. вместо удаления энтити из вектора
+//с помощью итератора просто делать энтити неактивным.
 using Entity = uint32_t;
 
 struct EntityRecord {
@@ -18,14 +21,19 @@ struct EntityRecord {
 	std::vector<std::unique_ptr<Component>> components;
 };
 
+//Класс-менеджер над ECS. 
+
 class Scene {
 private:
 	std::vector<EntityRecord> registry;
 	MovementSystem movement_;
-public:
+	int nextId_ = 0;
 	void CreateEntity(Entity entity);
+public:
+	Entity CreateEntity();
 	void DestroyEntity(Entity entity);
 
+	//Шаблонная функция для нахождения всех энтити с заданным компонентом. Применяется в системах.
 	template <typename T>
 	std::vector<Entity> Find() {
 		std::vector<Entity> result;
@@ -40,6 +48,8 @@ public:
 		return result;
 	}
 
+	//Шаблонная функция добавления заданному энтити нового компонента. Благодаря Args можно передавать пакеты параметров,
+	//далее использующиеся для подачи в конструктор заданного компонента
 	template <typename T, typename... Args>
 	void AddComponent(Entity entity, Args&&... args)
 	{
@@ -53,7 +63,9 @@ public:
 		ss << "Warning: Entity " << entity << " wasn't found" << "\n";
 		OutputDebugStringA(ss.str().c_str());
 	}
-
+	
+	//Шаблонная функция взятия компонента у энтити. Я отказался от дебага у этой функции в случае если не найден энтити по заданному id
+	//или если у энтити нет заданного компонента, так как это достаточно частая ситуация и в таком случае просто возвращается nullptr
 	template<typename T>
 	T* GetComponent(Entity entity)
 	{
@@ -74,7 +86,7 @@ public:
 	void Update(float dt);
 
 	void Save();
-	void Load();
+	bool Load();
 
 	void Initialize();
 

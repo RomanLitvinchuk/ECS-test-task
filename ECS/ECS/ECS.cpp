@@ -12,9 +12,11 @@ int main()
 
 	switch (choice) {
 	case 0:
-		scene.Load();
+		if (!scene.Load()) {
+			std::cout << "Initialize instead of load save file" << std::endl;
+			scene.Initialize();
+		}
 		break;
-
 	case 1:
 		scene.Initialize();
 		break;

@@ -1,6 +1,7 @@
 #include "systems.h"
 #include "scene.h"
 
+//Обновление энтити, у которых есть компонент Transform.
 void MovementSystem::Update(float dt, Scene& scene)
 {
 	auto entities = scene.Find<TransformComponent>();
