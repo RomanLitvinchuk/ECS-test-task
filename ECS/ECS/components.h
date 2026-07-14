@@ -15,6 +15,8 @@ public:
 	HealthComponent(int max, int current) : max_(max), current_(current) {}
 };
 
+//Вот здесь вместо std::vector<float> у меня была мысль использовать Vector3 из библиотеки SimpleMath для DirectX, но тогда нужно подключать эти сторонние библиотеки
+//Я не был уверен, насколько это целесообразно в данном случае, поэтому оставил так
 class TransformComponent : public Component {
 public:
 	std::vector<float> position_;
